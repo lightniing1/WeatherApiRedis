@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+
+  weatherapi:
+    image: ${DOCKER_REGISTRY-}weatherapi
+    build:
+      context: .
+      dockerfile: WeatherApi/Dockerfile
+    ports:
+      - "5001:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    depends_on:
+       - redis
+    
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
