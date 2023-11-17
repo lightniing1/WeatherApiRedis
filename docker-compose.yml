@@ -9,7 +9,6 @@ services:
       dockerfile: WeatherApi/Dockerfile
     ports:
       - "5001:443"
-      - "5000:80"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
@@ -18,5 +17,32 @@ services:
     
   redis:
     image: redis
+    build:
+      context: .
+      dockerfile: redis/master.Dockerfile
+    ports:
+      - "6377:6379"
+      - "26377:26379"
+    command: ["redis-server"]
+     
+  redis2:
+    image: redis
+    build:
+      context: .
+      dockerfile: redis/replica.Dockerfile
+    ports:
+      - "6378:6379"
+      - "26378:26379"
+    depends_on:
+       - redis
+    
+  redis3:
+    image: redis
+    build:
+      context: .
+      dockerfile: redis/replica.Dockerfile
     ports:
       - "6379:6379"
+      - "26379:26379"
+    depends_on:
+       - redis
