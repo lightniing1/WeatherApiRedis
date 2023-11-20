@@ -13,7 +13,9 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
     depends_on:
-       - redis
+      - redis
+    networks:
+      - redis-network
     
   redis:
     image: redis
@@ -24,6 +26,8 @@ services:
       - "6377:6379"
       - "26377:26379"
     command: ["redis-server"]
+    networks:
+      - redis-network
      
   redis2:
     image: redis
@@ -34,7 +38,9 @@ services:
       - "6378:6379"
       - "26378:26379"
     depends_on:
-       - redis
+      - redis
+    networks:
+      - redis-network
     
   redis3:
     image: redis
@@ -45,4 +51,14 @@ services:
       - "6379:6379"
       - "26379:26379"
     depends_on:
-       - redis
+      - redis
+    networks:
+      - redis-network
+
+networks:
+  redis-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.238.0/24
