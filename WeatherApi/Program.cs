@@ -34,9 +34,6 @@ namespace WeatherApi
                 options.ConfigurationOptions = sentinelConnection;
             });
 
-            //add redis sentinel service
-
-
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
