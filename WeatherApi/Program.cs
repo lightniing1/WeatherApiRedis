@@ -15,27 +15,11 @@ namespace WeatherApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            var sentinelConnection = new ConfigurationOptions
-            {
-                EndPoints = { "redis:26379", "redis2:26379", "redis3:26379" },
-                ServiceName = "mymaster",
-                TieBreaker = "",
-                CommandMap = CommandMap.Default,
-                Ssl = false,
-                AllowAdmin = true,
-                ConnectTimeout = 5000,
-                SyncTimeout = 5000,
-                AbortOnConnectFail = false,
-            };
-
             builder.Services.AddStackExchangeRedisCache(options =>
             {
                 options.InstanceName = "WeatherApiCache";
-                options.ConfigurationOptions = sentinelConnection;
+                options.Configuration = "redis:6379";
             });
-
-            //add redis sentinel service
-
 
             var app = builder.Build();
 

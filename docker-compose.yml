@@ -31,9 +31,6 @@ services:
      
   redis2:
     image: redis
-    build:
-      context: .
-      dockerfile: redis/replica.Dockerfile
     ports:
       - "6378:6379"
       - "26378:26379"
@@ -44,9 +41,6 @@ services:
     
   redis3:
     image: redis
-    build:
-      context: .
-      dockerfile: redis/replica.Dockerfile
     ports:
       - "6379:6379"
       - "26379:26379"
